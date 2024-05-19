@@ -1,118 +1,210 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React, {useState} from 'react';
+import {View} from 'react-native';
+import CheckboxItem from './components/CheckboxItem';
+import CheckboxTree from './components/CheckboxTree';
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+const App = () => {
+  const [selected, setSelected] = useState<string[]>([]);
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+  const datas = [
+    {
+      key: 'a1',
+      title: 'afafa1',
+      value: 'a1',
+      children: [
+        {
+          key: 'b1',
+          title: 'afafa',
+          value: 'b1',
+        },
+        {
+          key: 'b2',
+          title: 'afafa2',
+          value: 'b2',
+          children: [
+            {
+              key: 'c1',
+              title: 'afafa',
+              value: 'c1',
+              children: [
+                {
+                  key: 'd1',
+                  title: 'afafa',
+                  value: 'd1',
+                },
+                {
+                  key: 'd2',
+                  title: 'afafa',
+                  value: 'd2',
+                },
+                {
+                  key: 'd3',
+                  title: 'afafa',
+                  value: 'd3',
+                },
+              ],
+            },
+            {
+              key: 'c2',
+              title: 'afafa',
+              value: 'c2',
+            },
+            {
+              key: 'c3',
+              title: 'afafa',
+              value: 'c3',
+            },
+            {
+              key: 'c4',
+              title: 'afafa',
+              value: 'c4',
+            },
+          ],
+        },
+        {
+          key: 'b3',
+          title: 'afafa',
+          value: 'b3',
+        },
+        {
+          key: 'b4',
+          title: 'afafa',
+          value: 'b4',
+        },
+      ],
+    },
+    {
+      key: 'a2',
+      title: 'value 2',
+      value: 'a2',
+    },
+    {
+      key: 'a3',
+      title: 'Value 3',
+      value: 'a3',
+    },
+    // {
+    //   key: 'a',
+    //   title: 'afafa',
+    //   value: 'dafafa',
+    //   children: [
+    //     {
+    //       key: 'a',
+    //       title: 'afafa',
+    //       value: 'dafafa',
+    //     },
+    //     {
+    //       key: 'a',
+    //       title: 'afafa',
+    //       value: 'dafafa',
+    //       children: [
+    //         {
+    //           key: 'a',
+    //           title: 'afafa',
+    //           value: 'dafafa',
+    //         },
+    //         {
+    //           key: 'a',
+    //           title: 'afafa',
+    //           value: 'dafafa',
+    //         },
+    //         {
+    //           key: 'a',
+    //           title: 'afafa',
+    //           value: 'dafafa',
+    //         },
+    //         {
+    //           key: 'a',
+    //           title: 'afafa',
+    //           value: 'dafafa',
+    //         },
+    //       ],
+    //     },
+    //     {
+    //       key: 'a',
+    //       title: 'afafa',
+    //       value: 'dafafa',
+    //     },
+    //     {
+    //       key: 'a',
+    //       title: 'afafa',
+    //       value: 'dafafa',
+    //     },
+    //   ],
+    // },
+    // {
+    //   key: 'a',
+    //   title: 'afafa',
+    //   value: 'dafafa',
+    //   children: [
+    //     {
+    //       key: 'a',
+    //       title: 'afafa',
+    //       value: 'dafafa',
+    //     },
+    //     {
+    //       key: 'a',
+    //       title: 'afafa',
+    //       value: 'dafafa',
+    //       children: [
+    //         {
+    //           key: 'a',
+    //           title: 'afafa',
+    //           value: 'dafafa',
+    //         },
+    //         {
+    //           key: 'a',
+    //           title: 'afafa',
+    //           value: 'dafafa',
+    //         },
+    //         {
+    //           key: 'a',
+    //           title: 'afafa',
+    //           value: 'dafafa',
+    //         },
+    //         {
+    //           key: 'a',
+    //           title: 'afafa',
+    //           value: 'dafafa',
+    //         },
+    //       ],
+    //     },
+    //     {
+    //       key: 'a',
+    //       title: 'afafa',
+    //       value: 'dafafa',
+    //     },
+    //     {
+    //       key: 'a',
+    //       title: 'afafa',
+    //       value: 'dafafa',
+    //     },
+    //   ],
+    // },
+  ];
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+  /*
+  selected: {
+   a1: {
+    selected: [1, 3, ,5, 5],
+    b1: {
+      selected: [1234]
+    }
+   }
+  }
+*/
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+  // console.log(selected);
+
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
+    <View style={{padding: 20}}>
+      <CheckboxTree
+        data={datas}
+        onSelect={vals => setSelected(vals)}
+        selected={selected}
+      />
     </View>
   );
-}
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+};
 
 export default App;
