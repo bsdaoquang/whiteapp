@@ -8051,6 +8051,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-rncomponents@npm:^0.0.4":
+  version: 0.0.4
+  resolution: "react-native-rncomponents@npm:0.0.4"
+  dependencies:
+    "@react-native-community/checkbox": ^0.5.17
+    iconsax-react-native: ^0.0.8
+    react-native-svg: ^15.3.0
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: f36b53b114f87dd8caa376fcd92014643d40457f5817336d34400451a003300308f6e6401771bc7292b310f512460b9e7dcce9203a1081992a05e9a4f58adc67
+  languageName: node
+  linkType: hard
+
 "react-native-svg@npm:^15.3.0":
   version: 15.3.0
   resolution: "react-native-svg@npm:15.3.0"
@@ -9605,6 +9619,7 @@ __metadata:
     prettier: 2.8.8
     react: 18.2.0
     react-native: 0.74.1
+    react-native-rncomponents: ^0.0.4
     react-native-svg: ^15.3.0
     react-test-renderer: 18.2.0
     typescript: 5.0.4

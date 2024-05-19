@@ -1,23 +1,48 @@
 import CheckBox from '@react-native-community/checkbox';
-import {ArrowDown2, ArrowRight2} from 'iconsax-react-native';
-import React, {useState} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {ArrowDown2, ArrowRight2, Icon} from 'iconsax-react-native';
+import React, {ReactNode, useState} from 'react';
+import {
+  StyleProp,
+  Text,
+  TextStyle,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native';
 
 interface CheckBoxModel {
-  key: string;
   children?: CheckBoxModel[];
   value: string;
-  title: string;
+  label: string;
+  icon?: ReactNode;
 }
 
 interface Props {
   item: CheckBoxModel;
   onSelect: (val: string) => void;
   selected: string[];
+  expandedIcon?: ReactNode;
+  unExpandedIcon?: ReactNode;
+  checkedColor?: string;
+  unCheckedColor?: string;
+  textStyle?: StyleProp<TextStyle>;
+  labelColor?: string;
+  styles?: StyleProp<ViewStyle>;
 }
 
 const CheckboxItem = (props: Props) => {
-  const {item, onSelect, selected} = props;
+  const {
+    item,
+    onSelect,
+    selected,
+    expandedIcon,
+    unExpandedIcon,
+    checkedColor,
+    unCheckedColor,
+    textStyle,
+    styles,
+    labelColor,
+  } = props;
   const [collapsed, setCollapsed] = useState(false);
 
   const handleCheck = (item: CheckBoxModel) => {
@@ -69,12 +94,12 @@ const CheckboxItem = (props: Props) => {
     return (
       <CheckBox
         tintColors={{
-          true: '#1abc9c',
+          true: checkedColor ?? '#1abc9c',
           false: item.children
             ? count > 0 && count > 0 && count < totalChild
-              ? '#1abc9c'
-              : '#bdc3c7'
-            : '#bdc3c7',
+              ? checkedColor ?? '#1abc9c'
+              : unCheckedColor ?? '#bdc3c7'
+            : unCheckedColor ?? '#bdc3c7',
         }}
         onValueChange={() => handleCheck(item)}
         value={
@@ -89,12 +114,22 @@ const CheckboxItem = (props: Props) => {
   };
 
   return (
-    <View key={item.key}>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+    <View key={item.value}>
+      <View
+        style={[
+          {flexDirection: 'row', alignItems: 'center', marginBottom: 8},
+          styles,
+        ]}>
         {item.children && item.children.length > 0 ? (
           <TouchableOpacity onPress={() => setCollapsed(!collapsed)}>
             {collapsed ? (
-              <ArrowDown2 size={16} color="#212121" />
+              expandedIcon ? (
+                expandedIcon
+              ) : (
+                <ArrowDown2 size={16} color="#212121" />
+              )
+            ) : unExpandedIcon ? (
+              unExpandedIcon
             ) : (
               <ArrowRight2 size={16} color="#212121" />
             )}
@@ -106,7 +141,16 @@ const CheckboxItem = (props: Props) => {
           onPress={() => handleCheck(item)}
           style={{flexDirection: 'row', flex: 1, alignItems: 'center'}}>
           {renderCheckbox(item)}
-          <Text>{item.title}</Text>
+          <View style={{flex: 1, flexDirection: 'row'}}>
+            {item.icon && item.icon}
+            <Text
+              style={[
+                {color: labelColor ?? '#212121', marginLeft: item.icon ? 8 : 0},
+                textStyle,
+              ]}>
+              {item.label}
+            </Text>
+          </View>
         </TouchableOpacity>
       </View>
 
@@ -115,11 +159,18 @@ const CheckboxItem = (props: Props) => {
           {item.children &&
             item.children.length > 0 &&
             item.children.map(chil => (
-              <View style={{marginLeft: 24}} key={chil.key}>
+              <View style={{marginLeft: 24}} key={chil.value}>
                 <CheckboxItem
                   item={chil}
                   onSelect={val => onSelect(val)}
                   selected={selected}
+                  unCheckedColor={unCheckedColor}
+                  expandedIcon={expandedIcon}
+                  checkedColor={checkedColor}
+                  unExpandedIcon={unExpandedIcon}
+                  textStyle={textStyle}
+                  styles={styles}
+                  labelColor={labelColor}
                 />
               </View>
             ))}

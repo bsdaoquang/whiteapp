@@ -1,22 +1,40 @@
-import {View, Text} from 'react-native';
-import React, {useState} from 'react';
+import {View, Text, StyleProp, TextStyle, ViewStyle} from 'react-native';
+import React, {ReactNode, useState} from 'react';
 import CheckboxItem from './CheckboxItem';
 
 interface CheckBoxModel {
-  key: string;
   children?: CheckBoxModel[];
   value: string;
-  title: string;
+  label: string;
+  icon?: ReactNode;
 }
 
 interface Props {
   data: CheckBoxModel[];
   onSelect: (vals: string[]) => void;
   selected: string[];
+  expandedIcon?: ReactNode;
+  unExpandedIcon?: ReactNode;
+  checkedColor?: string;
+  unCheckedColor?: string;
+  textStyle?: StyleProp<TextStyle>;
+  labelColor?: string;
+  styles?: StyleProp<ViewStyle>;
 }
 
 const CheckboxTree = (props: Props) => {
-  const {data, onSelect, selected} = props;
+  const {
+    data,
+    onSelect,
+    selected,
+    expandedIcon,
+    unExpandedIcon,
+    checkedColor,
+    unCheckedColor,
+    textStyle,
+    styles,
+    labelColor,
+  } = props;
 
   const items = [...selected];
   const handleSelectItem = (val: string) => {
@@ -36,9 +54,16 @@ const CheckboxTree = (props: Props) => {
       {data.map(item => (
         <CheckboxItem
           item={item}
-          key={item.key}
+          key={item.value}
           onSelect={val => handleSelectItem(val)}
           selected={selected}
+          unCheckedColor={unCheckedColor}
+          expandedIcon={expandedIcon}
+          checkedColor={checkedColor}
+          unExpandedIcon={unExpandedIcon}
+          textStyle={textStyle}
+          styles={styles}
+          labelColor={labelColor}
         />
       ))}
     </>
