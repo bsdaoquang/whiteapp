@@ -82,7 +82,6 @@ const App = () => {
       key: 'a3',
       label: 'Value 3',
       value: 'a3',
-      icon: <Sort size={22} color={'coral'} />,
     },
   ];
 
